@@ -1,0 +1,203 @@
+---
+title: "differential composition supplement figures"
+author: "Yale Liu"
+date: "07/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+# Rscript -e "rmarkdown::render('cluster_visualization.Rmd')"
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggpattern)
+library(reshape2)
+library(cowplot)
+load("41cluster_data_yale_no203_218.Rda")
+```
+
+
+
+Here Rash includes only AD1, AE and Pso.
+
+```{r fig.height=10, fig.width=8}
+rash_lfc = as.data.frame(foldchange[,6])
+colnames(rash_lfc) = "Rash vs N"
+rash_p = as.matrix(pvals_prop[,6])
+
+vis_coef <- rash_lfc
+pvals_adj <- p.adjust(rash_p, method = "BH")
+vis_pvals_adj <- abs(log10(pvals_adj+1e-10))
+#knitr::kable(  vis_coef  )
+
+    
+vis_coef <- as.data.frame(vis_coef)
+vis_coef$CellType = rownames(vis_coef)
+vis_coef$CellType <- factor(vis_coef$CellType, levels = cell_identity$Identities)
+    #vis_coef$CellType <- factor(vis_coef$CellType, levels = 1:41)
+vis_coef = melt(vis_coef)
+colnames(vis_coef)[2:3] = c("Comparison", "coefs")
+vis_coef$IsSig = abs(vis_pvals_adj) >= abs(log10(0.05+1e-10))
+
+new_meta = meta %>% filter(dis %in% c("AD1","AE", "Pso", "LP", "BP", "NML")) %>%
+  group_by(new_level, identity) %>% summarise(n = n()) %>% 
+  mutate(freq = n / sum(n))
+
+vis_coef$p_val <- ""
+vis_coef$p_val <- ifelse(vis_coef$IsSig=="TRUE",
+                             "P-value < 0.05", "P-value> 0.05")
+
+
+p1 = ggplot(data = new_meta, aes(x = identity, y = freq, 
+                                 group = new_level, fill = new_level)) +
+  geom_bar(stat= "identity", position = "dodge")+
+  theme_classic()+ylab("proportion") +
+   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(fill = "") + xlab("CD45+ Cell Types")+ylab("Proportiion of CD45+ Cells")+
+  scale_fill_manual(values =  colorRampPalette(brewer.pal(12, "Paired"))(2))
+  
+p2 = ggplot(vis_coef, aes(x = CellType, y = coefs, fill = p_val)) + 
+      geom_bar(stat = "identity") + 
+      scale_fill_manual(values = c("red4", "gray")) +      
+  theme_classic() + 
+  labs(fill = "") + xlab("CD45+ Cell Types")+ylab("Log2FC Rash vs Normal")+
+  theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
+  ylab("log2-fold change")
+
+pp <- list(p1, p2)
+plot_grid(plotlist=pp, ncol=1, align='v')
+
+
+```
+```{r}
+dis_lfc = as.data.frame(foldchange[,1:3])
+colnames(dis_lfc) = colnames(foldchange)[1:3]
+dis_p = as.matrix(pvals_prop[,1:3])
+
+vis_coef <- dis_lfc
+pvals_adj <- p.adjust(dis_p, method = "BH")
+vis_pvals_adj <- abs(log10(pvals_adj+1e-10))
+#knitr::kable(  vis_coef  )
+
+    
+vis_coef <- as.data.frame(vis_coef)
+vis_coef$CellType = rownames(vis_coef)
+vis_coef$CellType <- factor(vis_coef$CellType, levels = cell_identity$Identities)
+    #vis_coef$CellType <- factor(vis_coef$CellType, levels = 1:41)
+vis_coef = melt(vis_coef)
+colnames(vis_coef)[2:3] = c("Comparison", "coefs")
+vis_coef$IsSig = abs(vis_pvals_adj) >= abs(log10(0.05+1e-10))
+
+
+new_meta = meta %>% filter(dis %in% c("AD1","AE", "Pso", "NML")) %>%
+  group_by(dis, identity) %>% summarise(n = n()) %>% 
+  mutate(freq = n / sum(n))
+
+new_meta$dis = factor(new_meta$dis, levels = c("AD1","AE", "Pso", "NML"))
+
+p1 =  ggplot(data = new_meta, aes(x = identity, y = freq, group = dis, fill = dis)) +
+  geom_bar(stat = "identity",position = "dodge")+
+  theme_classic()+ylab("proportion") + xlab("CellType") +
+   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  
+p2 = ggplot(vis_coef, aes(x = CellType, y = coefs, fill = Comparison, col = IsSig)) + 
+      geom_col_pattern(
+    pattern = ifelse(vis_coef$IsSig, "none", "stripe"), 
+    pattern_density = 0.35,
+    pattern_colour  = 'black',
+    position = "dodge"
+  ) +     
+  theme_classic() + 
+  theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
+  ylab("log2-fold change of log(p)") +
+  guides(col = guide_legend(override.aes = 
+                               list(
+                                 pattern = c("none",  "stripe")
+                                 )
+                             )) +
+  guides(fill = guide_legend(override.aes = 
+                               list(
+                                 pattern = c("none",  "none", "none")
+                                 )
+                             ))
+pp <- list(p1, p2)
+plot_grid(plotlist=pp, ncol=1, align='v')
+
+
+```
+
+Subset signigicant clusters from Rash vs N
+```{r}
+########## choose significant cells from Rash vs N
+new_label <- cbind.data.frame(vis_coef$CellType, vis_coef$IsSig)
+colnames(new_label) <- c("CellType", "IsSig")
+new_label <- subset(new_label, IsSig==TRUE)
+```
+
+Here we plot the log2-fold change using log proportion.
+
+```{r fig.height=10, fig.width=10}
+dis_lfc = as.data.frame(foldchange)
+colnames(dis_lfc) = colnames(foldchange)
+dis_p = as.matrix(pvals_prop)
+
+vis_coef <- dis_lfc
+pvals_adj <- p.adjust(dis_p, method = "BH")
+vis_pvals_adj <- abs(log10(pvals_adj+1e-10))
+#knitr::kable(  vis_coef  )
+
+    
+vis_coef <- as.data.frame(vis_coef)
+vis_coef$CellType = rownames(vis_coef)
+vis_coef$CellType <- factor(vis_coef$CellType, levels = cell_identity$Identities)
+    #vis_coef$CellType <- factor(vis_coef$CellType, levels = 1:41)
+vis_coef = melt(vis_coef)
+colnames(vis_coef)[2:3] = c("Comparison", "coefs")
+vis_coef$IsSig = abs(vis_pvals_adj) >= abs(log10(0.05+1e-10))
+
+
+new_meta = meta %>% filter(dis %in% c("AD1","AE", "Pso", "LP","BP", "NML")) %>%
+  group_by(dis, identity) %>% summarise(n = n()) %>% 
+  mutate(freq = n / sum(n))
+
+new_meta$dis = factor(new_meta$dis, levels = c("AD1","AE", "Pso", "LP","BP", "NML"))
+
+
+p1 =  ggplot(data = new_meta, aes(x = identity, y = freq, group = dis, fill = dis)) +
+  geom_bar(stat = "identity",position = "dodge")+
+  theme_classic()+ylab("proportion") + xlab("CellType") +
+   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+vis_coef2 = vis_coef %>% filter(vis_coef$CellType %in% new_label$CellType)
+vis_coef3 = vis_coef2 %>% filter(vis_coef2$Comparison %in% c("AD vs N",  "AE vs N",  "Pso vs N",  "LP vs N", "BP vs N"))
+p2 = ggplot(vis_coef3, aes(x = CellType, y = coefs, fill = Comparison, col = IsSig)) + 
+      geom_col_pattern(
+    pattern = ifelse(vis_coef3$IsSig, "none", "stripe"), 
+    pattern_density = 0.35,
+    pattern_colour  = 'black',
+    position = "dodge"
+  ) +     
+  theme_classic() + 
+  theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
+  ylab("log2-fold change of log(p)") +
+  guides(col = guide_legend(override.aes = 
+                               list(
+                                 pattern = c("none", "stripe")
+                                 )
+                             )) +
+  guides(fill = guide_legend(override.aes = 
+                               list(
+                                 pattern = c("none",  "none", "none",  "none", "none")
+                                 )
+                             ))
+pp <- list(p1, p2)
+plot_grid(plotlist=pp, ncol=1, align='v')
+
+
+
+
+
+```
