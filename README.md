@@ -4,4 +4,6 @@ This GitHub provides code to analyze scRNA sequencing data and generate figures 
 
 Raw bam files are deposited at the EGA under accession number EGAS00001005271, while the final seurat object with cell identites is saved at Zenodo with https://zenodo.org/deposit/5228495
 
-Produced in the Cheng/Cho Lab, Dept. of Dermatology, University of California, San Francisco
+Our paper based webpage tool can be accessed here: https://rashX.ucsf.edu
+
+Produced in the Cheng/Cho Lab, Dept. of Dermatology, University of California, San Francisco. If you have any question or request other data information, please feel free to email the corresponding authors
