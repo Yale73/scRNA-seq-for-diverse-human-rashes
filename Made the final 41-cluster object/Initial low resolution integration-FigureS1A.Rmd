@@ -1583,48 +1583,48 @@ plot1 + plot2
 Set the cutoff and filter the low-quality cells according to the upper scatter plot. We will use the uniform cutoff for all the samples. Then it will be easier to write the Method part.
 ```{r}
 ### normal
-Skin150 <- subset(Skin150, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin154 <- subset(Skin154, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin155 <- subset(Skin155, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin169 <- subset(Skin169, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin195 <- subset(Skin195, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin204 <- subset(Skin204, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin207 <- subset(Skin207, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
+Skin150 <- subset(Skin150, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin154 <- subset(Skin154, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin155 <- subset(Skin155, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin169 <- subset(Skin169, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin195 <- subset(Skin195, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin204 <- subset(Skin204, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin207 <- subset(Skin207, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
 
 ### AD
-Skin170 <- subset(Skin170, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin198 <- subset(Skin198, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin230 <- subset(Skin230, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin231 <- subset(Skin231, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin232 <- subset(Skin232, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin233 <- subset(Skin233, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin236 <- subset(Skin236, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
+Skin170 <- subset(Skin170, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin198 <- subset(Skin198, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin230 <- subset(Skin230, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin231 <- subset(Skin231, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin232 <- subset(Skin232, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin233 <- subset(Skin233, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin236 <- subset(Skin236, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
 
 ### psoriasis
-Skin165 <- subset(Skin165, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin173 <- subset(Skin173, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin194 <- subset(Skin194, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin199 <- subset(Skin199, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin211 <- subset(Skin211, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin222 <- subset(Skin222, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin234 <- subset(Skin234, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin235 <- subset(Skin235, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
+Skin165 <- subset(Skin165, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin173 <- subset(Skin173, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin194 <- subset(Skin194, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin199 <- subset(Skin199, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin211 <- subset(Skin211, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin222 <- subset(Skin222, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin234 <- subset(Skin234, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin235 <- subset(Skin235, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
 
 
 ### AE samples
-Skin167 <- subset(Skin167, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin174 <- subset(Skin174, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin192 <- subset(Skin192, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin200 <- subset(Skin200, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin202 <- subset(Skin202, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin218 <- subset(Skin218, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin219 <- subset(Skin219, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
+Skin167 <- subset(Skin167, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin174 <- subset(Skin174, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin192 <- subset(Skin192, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin200 <- subset(Skin200, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin202 <- subset(Skin202, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin218 <- subset(Skin218, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin219 <- subset(Skin219, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
 
 ####other
-Skin141 <- subset(Skin141, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin163 <- subset(Skin163, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin175 <- subset(Skin175, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
-Skin203 <- subset(Skin203, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 40)
+Skin141 <- subset(Skin141, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin163 <- subset(Skin163, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin175 <- subset(Skin175, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
+Skin203 <- subset(Skin203, subset = nFeature_RNA > 100 & nFeature_RNA < 6000 & percent.mt < 20)
 ```
 
 Check cell numbers after QC
