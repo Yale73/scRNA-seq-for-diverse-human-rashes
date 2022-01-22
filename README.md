@@ -1,4 +1,4 @@
-# Large-scale, single-cell dissection of molecular abnormalities stratifying human rashes
+# Classification of human chronic inflammatory skin disease based on immune single-cell profiling
 
 This GitHub provides code to analyze scRNA sequencing data and generate figures in Yale Liu, Hao Wang, Mark Taylor et al (Classification of human chronic inflammatory skin disease based on immune single-cell profiling).
 
