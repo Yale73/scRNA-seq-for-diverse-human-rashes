@@ -1769,54 +1769,6 @@ Skin175$dis <- "BP"
 Skin203$dis <- "MC"
 ```
 
-There are some patients with treatment when collecting the samples, we will also lable this so that we can compare some signals.
-```{r}
-#### treat
-### Normal
-Skin150$treat <- "No"
-Skin154$treat <- "No"
-Skin155$treat <- "No"
-Skin169$treat <- "No"
-Skin195$treat <- "No"
-Skin204$treat <- "No"
-Skin207$treat <- "No"
-
-### AD
-Skin170$treat <- "Yes"
-Skin198$treat <- "Yes"
-Skin230$treat <- "No"
-Skin231$treat <- "No"
-Skin232$treat <- "No"
-Skin233$treat <- "No"
-Skin236$treat <- "No"
-
-### psoriasis
-Skin165$treat <- "No"
-Skin173$treat <- "No"
-Skin194$treat <- "No"
-Skin199$treat <- "Yes"
-Skin211$treat <- "Yes"
-Skin222$treat <- "No"
-Skin234$treat <- "No"
-Skin235$treat <- "No"
-
-
-### AE samples
-Skin167$treat <- "No"
-Skin174$treat <- "No"
-Skin192$treat <- "Yes"
-Skin200$treat <- "Yes"
-Skin202$treat <- "Yes"
-Skin218$treat <- "No"
-Skin219$treat <- "No"
-
-####Other
-Skin141$treat <- "No"
-Skin163$treat <- "No"
-Skin175$treat <- "No"
-Skin203$treat <- "Yes"
-```
-
 There are some samples using the 10x v2 chemistry while others are 10x v3, which is the techonoly batch effect and we will correct it.
 ```{r}
 #### 10x chemistry version
