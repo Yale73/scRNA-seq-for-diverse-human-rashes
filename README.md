@@ -1,6 +1,6 @@
 # Classification of human chronic inflammatory skin disease based on immune single-cell profiling
 
-This GitHub provides code to analyze scRNA sequencing data and generate figures in Yale Liu, Hao Wang, Mark Taylor et al (Classification of human chronic inflammatory skin disease based on immune single-cell profiling).
+This GitHub provides code to analyze scRNA sequencing data and generate figures in Yale Liu, Hao Wang, Mark Taylor et al (https://www.science.org/doi/10.1126/sciimmunol.abl9165).
 
 Raw bam files are deposited at the EGA under accession number EGAS00001005271, while the final seurat object with cell identites is saved at Zenodo with https://zenodo.org/deposit/5228495
 
